@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 17.git%{shortcommit_docker}%{?dist}
+Release: 19.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -976,7 +976,7 @@ exit 0
 %doc README-novolume-plugin.md README-vim-syntax.md
 %config(noreplace) %{_sysconfdir}/sysconfig/%{repo}-network
 %config(noreplace) %{_sysconfdir}/sysconfig/%{repo}-storage
-%{_mandir}/man1/*
+%{_mandir}/man1/%{name}*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
 %{_bindir}/%{repo}-current
@@ -1085,6 +1085,10 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Mon Jun 19 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-19.git27e468e
+- Resolves: #1462963
+- ensure smooth upgrade path from f26 to rawhide
+
 * Thu Jun 15 2017 Frantisek Kluknavsky <fkluknav@redhat.com> - 2:1.13.1-17.git27e468e
 - rebase
 
