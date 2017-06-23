@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 19.git%{shortcommit_docker}%{?dist}
+Release: 20.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -569,10 +569,14 @@ echo 'STORAGE_DRIVER=overlay2' >> %{repo}-storage-setup-workstation
 ln -s %{repo}-storage-setup-workstation %{repo}-storage-setup-cloud
 # create server override config
 ln -s %{repo}-storage-setup-workstation %{repo}-storage-setup-server
-# create atomic override config
+# create atomic override config; see https://pagure.io/atomic-wg/issue/281
+%if 0%{?fedora} >= 27
+ln -s %{repo}-storage-setup-workstation %{repo}-storage-setup-atomichost
+%else
 cp %{repo}-storage-setup-server %{repo}-storage-setup-atomichost
 echo 'CONTAINER_ROOT_LV_NAME=docker-root-lv' >> %{repo}-storage-setup-atomichost
 echo 'CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker' >> %{repo}-storage-setup-atomichost
+%endif #atomichost
 %endif # custom_storage
 popd
 
@@ -1085,6 +1089,10 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Fri Jun 23 2017 Colin Walters <walters@verbum.org> - 2:1.13.1-20.git27e468e
+- Switch Atomic Host to non-separate container storage
+  See https://pagure.io/atomic-wg/issue/281
+
 * Mon Jun 19 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-19.git27e468e
 - Resolves: #1462963
 - ensure smooth upgrade path from f26 to rawhide
