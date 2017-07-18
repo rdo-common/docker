@@ -64,7 +64,7 @@
 
 # docker-runc
 %global git_runc https://github.com/projectatomic/runc/
-%global commit_runc e18c2ce5191576bab2e301b8ea250bd34dc0fc79
+%global commit_runc d90fcb78c3886d01d48829a11fb481af5db08372
 %global shortcommit_runc %(c=%{commit_runc}; echo ${c:0:7})
 
 # docker-containerd
@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 20.git%{shortcommit_docker}%{?dist}
+Release: 21.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1089,6 +1089,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Tue Jul 18 2017 fkluknav <fkluknav@redhat.com> - 2:1.13.1-21.git27e468e
+- rebased runc to d90fcb78c3886d01d48829a11fb481af5db08372
+
 * Fri Jun 23 2017 Colin Walters <walters@verbum.org> - 2:1.13.1-20.git27e468e
 - Switch Atomic Host to non-separate container storage
   See https://pagure.io/atomic-wg/issue/281
