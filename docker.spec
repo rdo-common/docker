@@ -94,7 +94,7 @@
 
 #oci-umount
 %global git_umount https://github.com/projectatomic/oci-umount
-%global commit_umount 7623f6adb2fa458b4b83a739ac0dd067e09175d9
+%global commit_umount 8377044dec05f05a7a1031d52241bce79b5ad446
 %global shortcommit_umount %(c=%{commit_umount}; echo ${c:0:7})
 
 Name: %{repo}
@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 21.git%{shortcommit_docker}%{?dist}
+Release: 22.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1089,6 +1089,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Thu Jul 20 2017 fkluknav <fkluknav@redhat.com> - 2:1.13.1-22.git27e468e
+- rebased oci-umount to 8377044dec05f05a7a1031d52241bce79b5ad446
+
 * Tue Jul 18 2017 fkluknav <fkluknav@redhat.com> - 2:1.13.1-21.git27e468e
 - rebased runc to d90fcb78c3886d01d48829a11fb481af5db08372
 
