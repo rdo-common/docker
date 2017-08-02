@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 23.git%{shortcommit_docker}%{?dist}
+Release: 24.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1089,6 +1089,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.13.1-24.git27e468e
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.13.1-23.git27e468e
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
