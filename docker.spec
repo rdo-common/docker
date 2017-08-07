@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/runcom/docker
-%global commit_docker 27e468e0954bba26b1176cee25a03560114fcb82
+%global commit_docker b5e3294e8666bb6d8da564286ed4c2790c7b9af1
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 24.git%{shortcommit_docker}%{?dist}
+Release: 25.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1089,6 +1089,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Mon Aug 07 2017 Frantisek Kluknavsky <fkluknav@redhat.com> - 2:1.13.1-25.gitb5e3294
+- rebased to b5e3294e8666bb6d8da564286ed4c2790c7b9af1
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.13.1-24.git27e468e
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
