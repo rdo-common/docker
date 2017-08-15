@@ -38,7 +38,7 @@
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
 
 # docker
-%global git_docker https://github.com/runcom/docker
+%global git_docker https://github.com/projectatomic/docker
 %global commit_docker b5e3294e8666bb6d8da564286ed4c2790c7b9af1
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
@@ -52,7 +52,7 @@
 
 # docker-novolume-plugin
 %global git_novolume https://github.com/projectatomic/%{repo}-novolume-plugin
-%global commit_novolume c5212546ab01b4b7b62caba888d298ab63f53984
+%global commit_novolume 385ec70baac3ef356f868f391c8d7818140fbd44
 %global shortcommit_novolume %(c=%{commit_novolume}; echo ${c:0:7})
 
 %if 0%{?with_migrator}
@@ -64,37 +64,37 @@
 
 # docker-runc
 %global git_runc https://github.com/projectatomic/runc/
-%global commit_runc d90fcb78c3886d01d48829a11fb481af5db08372
+%global commit_runc a07b8d43ec3adec4ddfc0de24695cfb2f64095c3
 %global shortcommit_runc %(c=%{commit_runc}; echo ${c:0:7})
 
 # docker-containerd
 %global git_containerd https://github.com/projectatomic/containerd
-%global commit_containerd 03e5862ec0d8d3b3f750e19fca3ee367e13c090e
+%global commit_containerd 62a9c6081b0ade9da18b31e623253020db4a8295
 %global shortcommit_containerd %(c=%{commit_containerd}; echo ${c:0:7})
 
 # rhel-push-plugin
 %global git_rhel_push https://github.com/projectatomic/rhel-push-plugin
-%global commit_rhel_push 70653ed7cbef7623ab850d09f0257a6b670582ce
+%global commit_rhel_push af9107b2aedb235338e32a3c19507cad3f218b0d
 %global shortcommit_rhel_push %(c=%{commit_rhel_push}; echo ${c:0:7})
 
 # docker-lvm-plugin
 %global git_lvm https://github.com/projectatomic/%{repo}-lvm-plugin
-%global commit_lvm bc03b5354aaa70ee14c482c4a861be08630bb755
+%global commit_lvm 8647404eed561d32835d6bc032b1c330ee31ed5b
 %global shortcommit_lvm %(c=%{commit_lvm}; echo ${c:0:7})
 
 # docker-proxy
 %global git_libnetwork https://github.com/docker/libnetwork
-%global commit_libnetwork 0f534354b813003a754606689722fe253101bc4e
+%global commit_libnetwork 2719c60fbd40d894a9cdabf95d2facbd14d2ba75
 %global shortcommit_libnetwork %(c=%{commit_libnetwork}; echo ${c:0:7})
 
 # tini
 %global git_tini https://github.com/krallin/tini
-%global commit_tini 949e6facb77383876aeff8a6944dde66b3089574
+%global commit_tini 4892d4dc7add670cede5640bd37a29ed0547e030
 %global shortcommit_tini %(c=%{commit_tini}; echo ${c:0:7})
 
 #oci-umount
 %global git_umount https://github.com/projectatomic/oci-umount
-%global commit_umount 8377044dec05f05a7a1031d52241bce79b5ad446
+%global commit_umount 299e781918c053d72b3d5fed8c6c149366d20ab0
 %global shortcommit_umount %(c=%{commit_umount}; echo ${c:0:7})
 
 Name: %{repo}
@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 25.git%{shortcommit_docker}%{?dist}
+Release: 26.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1089,6 +1089,17 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Tue Aug 15 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-26.gitb5e3294
+- built docker @projectatomic/docker-1.13.1 commit b5e3294
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit a07b8d4
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built oci-umount commit 299e781
+- built docker-init commit 4892d4d
+- built libnetwork commit 2719c60
+
 * Mon Aug 07 2017 Frantisek Kluknavsky <fkluknav@redhat.com> - 2:1.13.1-25.gitb5e3294
 - rebased to b5e3294e8666bb6d8da564286ed4c2790c7b9af1
 
