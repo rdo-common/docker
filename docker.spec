@@ -542,6 +542,7 @@ BuildRequires: automake
 BuildRequires: pkgconfig(yajl)
 BuildRequires: pkgconfig(libselinux)
 BuildRequires: pkgconfig(mount)
+BuildRequires: pcre-devel
 
 Obsoletes: docker-oci-umount < 1.13.1-13
 
@@ -1099,6 +1100,7 @@ exit 0
 - built oci-umount commit 299e781
 - built docker-init commit 4892d4d
 - built libnetwork commit 2719c60
+- oci-umount BR: pcre-devel
 
 * Mon Aug 07 2017 Frantisek Kluknavsky <fkluknav@redhat.com> - 2:1.13.1-25.gitb5e3294
 - rebased to b5e3294e8666bb6d8da564286ed4c2790c7b9af1
