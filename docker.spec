@@ -1,4 +1,4 @@
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %global with_devel 1
 %global with_debug 1
 %global with_unit_test 1
@@ -12,7 +12,7 @@
 %global __os_install_post %{_rpmconfigdir}/brp-compress
 
 # default overlay2 storage only on Fedora 26 and later
-%if 0%{?fedora} >= 26
+%if 0%{?fedora} >= 26 || 0%{?rhel} > 7
 %global custom_storage 1
 %else
 %global custom_storage 0
@@ -98,11 +98,11 @@
 %global shortcommit_umount %(c=%{commit_umount}; echo ${c:0:7})
 
 Name: %{repo}
-%if 0%{?fedora} || 0%{?centos}
+%if 0%{?fedora} || 0%{?centos} || 0%{?rhel} > 7
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 26.git%{shortcommit_docker}%{?dist}
+Release: 27.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -151,7 +151,7 @@ BuildRequires: libassuan-devel
 BuildRequires: %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang >= 1.6.2}
 BuildRequires: go-md2man
 BuildRequires: device-mapper-devel
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 BuildRequires: godep
 BuildRequires: libseccomp-static >= 2.3.0
 %else %if 0%{?centos}
@@ -161,7 +161,7 @@ BuildRequires: pkgconfig(audit)
 BuildRequires: btrfs-progs-devel
 BuildRequires: sqlite-devel
 BuildRequires: pkgconfig(systemd)
-%if 0%{?fedora} >= 21
+%if 0%{?fedora} >= 21 || 0%{?rhel} > 7
 
 # Resolves: rhbz#1165615
 Requires: device-mapper-libs >= 1.02.90-1
@@ -203,7 +203,7 @@ Requires: container-storage-setup
 # permitted by https://fedorahosted.org/fpc/ticket/341#comment:7
 # In F22, the whole package should be renamed to be just "docker" and
 # this changed to "Provides: docker-io".
-%if 0%{?fedora} >= 22
+%if 0%{?fedora} >= 22 || 0%{?rhel} > 7
 Provides: %{repo}-io = %{epoch}:%{version}-%{release}
 Obsoletes: %{repo}-io <= 1.5.0-19
 %endif
@@ -216,7 +216,7 @@ Obsoletes: %{repo}-storage-setup <= 0.5-3
 
 Requires: libseccomp >= 2.3.0
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 Recommends: oci-register-machine
 Recommends: oci-systemd-hook
 Recommends: criu
@@ -571,7 +571,7 @@ ln -s %{repo}-storage-setup-workstation %{repo}-storage-setup-cloud
 # create server override config
 ln -s %{repo}-storage-setup-workstation %{repo}-storage-setup-server
 # create atomic override config; see https://pagure.io/atomic-wg/issue/281
-%if 0%{?fedora} >= 27
+%if 0%{?fedora} >= 27 || 0%{?rhel} > 7
 ln -s %{repo}-storage-setup-workstation %{repo}-storage-setup-atomichost
 %else
 cp %{repo}-storage-setup-server %{repo}-storage-setup-atomichost
@@ -678,7 +678,7 @@ go-md2man -in %{repo}-lvm-plugin-%{commit_lvm}/man/%{repo}-lvm-plugin.8.md -out 
 %if 0%{?with_migrator}
 # build v1.10-migrator
 pushd v1.10-migrator-%{commit_migrator}
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 make v1.10-migrator-local
 %else
 go build -o v1.10-migrator-local .
@@ -767,7 +767,7 @@ install -d %{buildroot}%{_datadir}/rhel/secrets
 
 # install systemd/init scripts
 install -d %{buildroot}%{_unitdir}
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 install -p -m 644 %{SOURCE5} %{buildroot}%{_unitdir}
 install -p -m 644 %{SOURCE14} %{buildroot}%{_unitdir}
 %else
@@ -1090,6 +1090,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Wed Aug 16 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-27.gitb5e3294
+- fix spec file conditionals
+
 * Tue Aug 15 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-26.gitb5e3294
 - built docker @projectatomic/docker-1.13.1 commit b5e3294
 - built docker-novolume-plugin commit 385ec70
