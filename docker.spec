@@ -94,7 +94,7 @@
 
 #oci-umount
 %global git_umount https://github.com/projectatomic/oci-umount
-%global commit_umount 299e781918c053d72b3d5fed8c6c149366d20ab0
+%global commit_umount f90b64c144ff1a126f7c57b32396e8990ca696fd
 %global shortcommit_umount %(c=%{commit_umount}; echo ${c:0:7})
 
 Name: %{repo}
@@ -102,7 +102,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 27.git%{shortcommit_docker}%{?dist}
+Release: 28.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1090,6 +1090,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/oci-umount.conf
 
 %changelog
+* Wed Aug 16 2017 Dan Walsh <dwalsh@fedoraproject.org> - 2:1.13.1-28.gitb5e3294
+- Update oci-umount to work with cri-o
+
 * Wed Aug 16 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-27.gitb5e3294
 - fix spec file conditionals
 
