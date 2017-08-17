@@ -92,17 +92,12 @@
 %global commit_tini 4892d4dc7add670cede5640bd37a29ed0547e030
 %global shortcommit_tini %(c=%{commit_tini}; echo ${c:0:7})
 
-#oci-umount
-%global git_umount https://github.com/projectatomic/oci-umount
-%global commit_umount f90b64c144ff1a126f7c57b32396e8990ca696fd
-%global shortcommit_umount %(c=%{commit_umount}; echo ${c:0:7})
-
 Name: %{repo}
 %if 0%{?fedora} || 0%{?centos} || 0%{?rhel} > 7
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 28.git%{shortcommit_docker}%{?dist}
+Release: 29.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -135,7 +130,6 @@ Source20: %{repo}.service.centos
 Source21: %{repo}-containerd.service.centos
 Source22: %{git_libnetwork}/archive/%{commit_libnetwork}/libnetwork-%{shortcommit_libnetwork}.tar.gz
 Source23: %{git_tini}/archive/%{commit_tini}/tini-%{shortcommit_tini}.tar.gz
-Source24: %{git_umount}/archive/%{commit_umount}/oci-umount-%{shortcommit_umount}.tar.gz
 
 %if 0%{?with_debug}
 # Build with debug
@@ -146,6 +140,7 @@ BuildRequires: sed
 BuildRequires: git
 BuildRequires: cmake
 BuildRequires: glibc-static
+BuildRequires: git
 BuildRequires: gpgme-devel
 BuildRequires: libassuan-devel
 BuildRequires: %{?go_compiler:compiler(go-compiler)}%{!?go_compiler:golang >= 1.6.2}
@@ -227,7 +222,7 @@ Requires: criu
 %endif
 
 #oci-umount should probably be a hard dependency, not soft
-Requires: oci-umount
+Requires: oci-umount >= 2:2.0.0-1
 
 %if %{custom_storage}
 Provides: variant_config(Atomic.host)
@@ -534,25 +529,8 @@ Docker Volume Driver for lvm volumes.
 This plugin can be used to create lvm volumes of specified size, which can
 then be bind mounted into the container using `docker run` command.
 
-%package -n oci-umount
-License: GPLv3+
-Summary: OCI umount hook for docker
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: pkgconfig(yajl)
-BuildRequires: pkgconfig(libselinux)
-BuildRequires: pkgconfig(mount)
-BuildRequires: pcre-devel
-
-Obsoletes: docker-oci-umount < 1.13.1-13
-
-%description -n oci-umount
-OCI umount hooks unmount potential leaked mount points in a containers
-mount namespaces.
-
-
 %prep
-%setup -q -n %{repo}-%{commit_docker}
+%autosetup -Sgit -n %{repo}-%{commit_docker}
 
 # here keep the new line above otherwise autosetup fails when applying patch
 cp %{SOURCE9} .
@@ -616,10 +594,6 @@ tar zxf %{SOURCE22}
 
 # untar tini
 tar zxf %{SOURCE23}
-
-# untar oci-hook
-tar zxf %{SOURCE24}
-
 
 %build
 # set up temporary build gopath, and put our directory there
@@ -702,14 +676,6 @@ pushd tini-%{commit_tini}
 cmake .
 make tini-static
 popd
-
-# build oci-umount
-pushd oci-umount-%{commit_umount}
-autoreconf -i
-%configure --libexecdir=/usr/libexec/oci/hooks.d/
-make %{?_smp_mflags}
-popd
-
 
 %install
 # install binary
@@ -796,11 +762,6 @@ install -p -m 755 containerd-%{commit_containerd}/bin/ctr %{buildroot}%{_libexec
 # install tini
 install -d %{buildroot}%{_libexecdir}/%{repo}
 install -p -m 755 tini-%{commit_tini}/tini-static %{buildroot}%{_libexecdir}/%{repo}/%{repo}-init-current
-
-# install oci-umount
-pushd oci-umount-%{commit_umount}
-%make_install
-popd
 
 # for additional args
 install -d %{buildroot}%{_sysconfdir}/sysconfig/
@@ -1080,16 +1041,11 @@ exit 0
 %{_libexecdir}/%{repo}/%{repo}-lvm-plugin
 %{_unitdir}/%{repo}-lvm-plugin.*
 
-%files -n oci-umount
-%{_libexecdir}/oci/hooks.d/oci-umount
-%{_mandir}/man1/oci-umount.1*
-%doc  oci-umount-%{commit_umount}/README.md
-%license  oci-umount-%{commit_umount}/LICENSE
-%dir %{_libexecdir}/oci
-%dir %{_libexecdir}/oci/hooks.d
-%config(noreplace) %{_sysconfdir}/oci-umount.conf
-
 %changelog
+* Thu Aug 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-29.gitb5e3294
+- oci-umount is a separate package
+- use autosetup
+
 * Wed Aug 16 2017 Dan Walsh <dwalsh@fedoraproject.org> - 2:1.13.1-28.gitb5e3294
 - Update oci-umount to work with cri-o
 
