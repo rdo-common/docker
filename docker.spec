@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 29.git%{shortcommit_docker}%{?dist}
+Release: 30.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -968,6 +968,7 @@ exit 0
 %{_unitdir}/%{repo}-storage-setup.service
 %{_bindir}/%{repo}-storage-setup
 # >= 1.11 specific
+%dir %{_libexecdir}/%{repo}/
 %{_libexecdir}/%{repo}/%{repo}-runc-current
 %{_libexecdir}/%{repo}/%{repo}-containerd-current
 %{_libexecdir}/%{repo}/%{repo}-containerd-shim-current
@@ -1042,6 +1043,9 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Tue Aug 22 2017 Ville Skyttä <ville.skytta@iki.fi> - 2:1.13.1-30.gitb5e3294
+- Own the %%{_libexecdir}/%%{repo} dir
+
 * Thu Aug 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-29.gitb5e3294
 - oci-umount is a separate package
 - use autosetup
