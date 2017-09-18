@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker b5e3294e8666bb6d8da564286ed4c2790c7b9af1
+%global commit_docker 790e958baabc39244ea53bf013ab2dc3bcbaa135
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -84,12 +84,12 @@
 
 # docker-proxy
 %global git_libnetwork https://github.com/docker/libnetwork
-%global commit_libnetwork 2719c60fbd40d894a9cdabf95d2facbd14d2ba75
+%global commit_libnetwork 6d098467ec58038b68620a3c2c418936661efa64
 %global shortcommit_libnetwork %(c=%{commit_libnetwork}; echo ${c:0:7})
 
 # tini
 %global git_tini https://github.com/krallin/tini
-%global commit_tini 4892d4dc7add670cede5640bd37a29ed0547e030
+%global commit_tini 0effd37412ba5ae7e00af0db1f36f5dbc1671df9
 %global shortcommit_tini %(c=%{commit_tini}; echo ${c:0:7})
 
 Name: %{repo}
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 30.git%{shortcommit_docker}%{?dist}
+Release: 31.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -221,7 +221,6 @@ Requires: oci-systemd-hook
 Requires: criu
 %endif
 
-#oci-umount should probably be a hard dependency, not soft
 Requires: oci-umount >= 2:2.0.0-1
 
 %if %{custom_storage}
@@ -1043,6 +1042,16 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Mon Sep 18 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-31.git790e958
+- built docker @projectatomic/docker-1.13.1 commit 790e958
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit a07b8d4
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built docker-init commit 0effd37
+- built libnetwork commit 6d09846
+
 * Tue Aug 22 2017 Ville Skyttä <ville.skytta@iki.fi> - 2:1.13.1-30.gitb5e3294
 - Own the %%{_libexecdir}/%%{repo} dir
 
