@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 32.git%{shortcommit_docker}%{?dist}
+Release: 33.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1022,6 +1022,9 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Tue Oct 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-33.git790e958
+- update unitfile to include --seccomp-profile option with daemon
+
 * Tue Oct 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-32.git790e958
 - use skopeo-containers>= 0.1.24-6
 - rhel subscription secrets data moved to skopeo-containers
