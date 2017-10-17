@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 31.git%{shortcommit_docker}%{?dist}
+Release: 32.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -162,7 +162,7 @@ BuildRequires: pkgconfig(systemd)
 Requires: device-mapper-libs >= 1.02.90-1
 %endif
 
-Requires: skopeo-containers
+Requires: skopeo-containers >= 0.1.24-6
 Requires: gnupg
 Requires: atomic-registries
 
@@ -497,15 +497,6 @@ that time. You can run this tool instead while the old daemon is still
 running and skip checksum calculation on startup.
 %endif #with_migrator
 
-%package rhsubscription
-Summary: Red Hat subscription management files needed on the host to enable RHEL containers
-Requires: %{repo} = %{epoch}:%{version}-%{release}
-Requires: subscription-manager-plugin-container
-Provides: %{repo}-io-rhsubscription = %{version}-%{release}
-
-%description rhsubscription
-In order to work with RHEL containers, the host (RHEL, or other) must export susbcription information to the container.
-
 %package rhel-push-plugin
 License: GPLv2
 Summary: Avoids pushing a RHEL-based image to docker.io registry
@@ -824,13 +815,8 @@ cp v1.10-migrator-%{commit_migrator}/LICENSE.docs LICENSE-v1.10-migrator.docs
 install -p -m 700 %{SOURCE15} %{buildroot}%{_bindir}
 %endif # with_migrator
 
-# install secrets patch directory
-install -d -p -m 750 %{buildroot}/%{_datadir}/rhel/secrets
-# rhbz#1110876 - update symlinks for subscription management
-ln -s %{_sysconfdir}/pki/entitlement %{buildroot}%{_datadir}/rhel/secrets/etc-pki-entitlement
-ln -s %{_sysconfdir}/rhsm %{buildroot}%{_datadir}/rhel/secrets/rhsm
-ln -s %{_sysconfdir}/yum.repos.d/redhat.repo %{buildroot}%{_datadir}/rhel/secrets/rhel7.repo
-mkdir -p %{buildroot}/etc/%{name}/certs.d/redhat.{com,io}
+# install certs for redhat registries
+mkdir -p %{buildroot}%{_sysconfdir}/%{name}/certs.d/redhat.{com,io}
 ln -s %{_sysconfdir}/rhsm/ca/redhat-uep.pem %{buildroot}/%{_sysconfdir}/%{name}/certs.d/redhat.com/redhat-ca.crt
 ln -s %{_sysconfdir}/rhsm/ca/redhat-uep.pem %{buildroot}/%{_sysconfdir}/%{name}/certs.d/redhat.io/redhat-ca.crt
 
@@ -949,7 +935,6 @@ exit 0
 %{_unitdir}/%{repo}.service
 %{_unitdir}/%{repo}-containerd.service
 %{_datadir}/bash-completion/completions/%{repo}
-%dir %{_datadir}/rhel/secrets
 %dir %{_sharedstatedir}/%{repo}
 %{_udevrulesdir}/80-%{repo}.rules
 %{_sysconfdir}/%{repo}
@@ -1021,11 +1006,6 @@ exit 0
 %{_bindir}/v1.10-migrator-*
 %endif # with_migrator
 
-%files rhsubscription
-%{_datadir}/rhel/secrets/etc-pki-entitlement
-%{_datadir}/rhel/secrets/rhel7.repo
-%{_datadir}/rhel/secrets/rhsm
-
 %files rhel-push-plugin
 %license rhel-push-plugin-%{commit_rhel_push}/LICENSE
 %doc rhel-push-plugin-%{commit_rhel_push}/README.md
@@ -1042,6 +1022,10 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Tue Oct 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-32.git790e958
+- use skopeo-containers>= 0.1.24-6
+- rhel subscription secrets data moved to skopeo-containers
+
 * Mon Sep 18 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-31.git790e958
 - built docker @projectatomic/docker-1.13.1 commit 790e958
 - built docker-novolume-plugin commit 385ec70
