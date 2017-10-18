@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker 790e958baabc39244ea53bf013ab2dc3bcbaa135
+%global commit_docker 8fd0ebbf4db4483dee1abe964a4e62b2ba3532cc
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -64,7 +64,7 @@
 
 # docker-runc
 %global git_runc https://github.com/projectatomic/runc/
-%global commit_runc a07b8d43ec3adec4ddfc0de24695cfb2f64095c3
+%global commit_runc 06641d757be1de5dec734776173c7564241efae5
 %global shortcommit_runc %(c=%{commit_runc}; echo ${c:0:7})
 
 # docker-containerd
@@ -84,7 +84,7 @@
 
 # docker-proxy
 %global git_libnetwork https://github.com/docker/libnetwork
-%global commit_libnetwork 6d098467ec58038b68620a3c2c418936661efa64
+%global commit_libnetwork b5cc5c5dee7345ae2356540f235af94ee67af7e9
 %global shortcommit_libnetwork %(c=%{commit_libnetwork}; echo ${c:0:7})
 
 # tini
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 33.git%{shortcommit_docker}%{?dist}
+Release: 34.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1022,6 +1022,16 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Wed Oct 18 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-34.git8fd0ebb
+- built docker @projectatomic/docker-1.13.1 commit 8fd0ebb
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit 06641d7
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built docker-init commit 0effd37
+- built libnetwork commit b5cc5c5
+
 * Tue Oct 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-33.git790e958
 - update unitfile to include --seccomp-profile option with daemon
 
