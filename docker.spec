@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 34.git%{shortcommit_docker}%{?dist}
+Release: 35.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -113,6 +113,7 @@ Source7: %{repo}-storage.sysconfig
 Source8: %{repo}-logrotate.sh
 Source9: README.%{repo}-logrotate
 Source10: %{repo}-network.sysconfig
+Source11: seccomp.json
 %if 0%{?with_migrator}
 Source11: %{git_migrator}/archive/%{commit_migrator}/v1.10-migrator-%{shortcommit_migrator}.tar.gz
 %endif # with_migrator
@@ -782,8 +783,10 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
 done
 %endif
 
-# install %%{repo} config directory
-install -dp %{buildroot}%{_sysconfdir}/%{repo}
+# install %%{name} config directory
+install -dp %{buildroot}%{_sysconfdir}/%{name}
+# install seccomp.json
+install -p -m 644 %{SOURCE11} %{buildroot}%{_sysconfdir}/%{name}
 
 # install d-s-s
 pushd container-storage-setup-%{commit_dss}
@@ -990,6 +993,7 @@ exit 0
 %doc README-%{repo}-common
 %{_bindir}/%{repo}
 %config(noreplace) %{_sysconfdir}/sysconfig/%{repo}
+%{_sysconfdir}/%{name}/seccomp.json
 
 %files vim
 %{_datadir}/vim/vimfiles/doc/%{repo}file.txt
@@ -1022,6 +1026,9 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Thu Oct 19 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-35.git8fd0ebb
+- Resolves: #1504065 - include seccomp.json in docker-common
+
 * Wed Oct 18 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-34.git8fd0ebb
 - built docker @projectatomic/docker-1.13.1 commit 8fd0ebb
 - built docker-novolume-plugin commit 385ec70
