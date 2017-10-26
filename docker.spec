@@ -84,7 +84,7 @@
 
 # docker-proxy
 %global git_libnetwork https://github.com/docker/libnetwork
-%global commit_libnetwork b5cc5c5dee7345ae2356540f235af94ee67af7e9
+%global commit_libnetwork dd20549dbc822d961498e76c4b6e977fb26f9313
 %global shortcommit_libnetwork %(c=%{commit_libnetwork}; echo ${c:0:7})
 
 # tini
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 35.git%{shortcommit_docker}%{?dist}
+Release: 36.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1026,6 +1026,16 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Thu Oct 26 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-36.git8fd0ebb
+- built docker @projectatomic/docker-1.13.1 commit 8fd0ebb
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit 06641d7
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built docker-init commit 0effd37
+- built libnetwork commit dd20549
+
 * Thu Oct 19 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-35.git8fd0ebb
 - Resolves: #1504065 - include seccomp.json in docker-common
 
