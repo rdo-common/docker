@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker 8fd0ebbf4db4483dee1abe964a4e62b2ba3532cc
+%global commit_docker 166a52e4cf4a5488393ffd5b45c05216514ff5d3
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -84,7 +84,7 @@
 
 # docker-proxy
 %global git_libnetwork https://github.com/docker/libnetwork
-%global commit_libnetwork dd20549dbc822d961498e76c4b6e977fb26f9313
+%global commit_libnetwork 6d1dc05098a250553b8f5b54d96609d5bdd824f2
 %global shortcommit_libnetwork %(c=%{commit_libnetwork}; echo ${c:0:7})
 
 # tini
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 36.git%{shortcommit_docker}%{?dist}
+Release: 37.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -165,7 +165,7 @@ Requires: device-mapper-libs >= 1.02.90-1
 
 Requires: skopeo-containers >= 0.1.24-6
 Requires: gnupg
-Requires: atomic-registries
+Requires: atomic-registries >= 1.19.1-5
 
 # BZ#1399098
 Requires: python-rhsm-certificates
@@ -1026,6 +1026,17 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Thu Nov 02 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-37.git166a52e
+- Resolves: #1507679
+- built docker @projectatomic/docker-1.13.1 commit 166a52e
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit 06641d7
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built docker-init commit 0effd37
+- built libnetwork commit 6d1dc05
+
 * Thu Oct 26 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-36.git8fd0ebb
 - built docker @projectatomic/docker-1.13.1 commit 8fd0ebb
 - built docker-novolume-plugin commit 385ec70
