@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 37.git%{shortcommit_docker}%{?dist}
+Release: 38.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1026,6 +1026,9 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Thu Nov 02 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-38.git166a52e
+- ensure clean upgrade from f26
+
 * Thu Nov 02 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-37.git166a52e
 - Resolves: #1507679
 - built docker @projectatomic/docker-1.13.1 commit 166a52e
