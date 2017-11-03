@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker 166a52e4cf4a5488393ffd5b45c05216514ff5d3
+%global commit_docker 877b6df065ba431384723ef496a2d5240ae96a94
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 39.git%{shortcommit_docker}%{?dist}
+Release: 40.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1026,6 +1026,16 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Fri Nov 03 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-40.git877b6df
+- built docker @projectatomic/docker-1.13.1 commit 877b6df
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit 06641d7
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built docker-init commit 0effd37
+- built libnetwork commit 6d1dc05
+
 * Fri Nov 03 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-39.git166a52e
 - ensure clean upgrade from f26
  
