@@ -165,7 +165,7 @@ Requires: device-mapper-libs >= 1.02.90-1
 
 Requires: skopeo-containers >= 0.1.24-6
 Requires: gnupg
-Requires: atomic-registries >= 1.19.1-5
+Requires: atomic-registries >= 1.19.1-6
 
 # BZ#1399098
 Requires: python-rhsm-certificates
