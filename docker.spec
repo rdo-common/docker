@@ -163,7 +163,7 @@ BuildRequires: pkgconfig(systemd)
 Requires: device-mapper-libs >= 1.02.90-1
 %endif
 
-Requires: skopeo-containers >= 0.1.24-6
+Requires: skopeo-containers >= 0.1.25-2
 Requires: gnupg
 Requires: atomic-registries >= 1.19.1-6
 
