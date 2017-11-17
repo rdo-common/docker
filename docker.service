@@ -27,7 +27,7 @@ ExecStart=/usr/bin/dockerd-current \
           $ADD_REGISTRY \
           $BLOCK_REGISTRY \
           $INSECURE_REGISTRY \
-	  $REGISTRIES
+          $REGISTRIES
 ExecReload=/bin/kill -s HUP $MAINPID
 TasksMax=8192
 LimitNOFILE=1048576
