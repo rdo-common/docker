@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker 0861eff0ac71bbca3e749da4c62743af7b622dcf
+%global commit_docker 4402c09586c72e0c32b90d72bd24304f609e2b7a
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -64,7 +64,7 @@
 
 # docker-runc
 %global git_runc https://github.com/projectatomic/runc/
-%global commit_runc 06641d757be1de5dec734776173c7564241efae5
+%global commit_runc 1c91122c1d992cf1dc971ff14f78eddbf6fb06f5
 %global shortcommit_runc %(c=%{commit_runc}; echo ${c:0:7})
 
 # docker-containerd
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 41.git%{shortcommit_docker}%{?dist}
+Release: 42.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1026,6 +1026,16 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Fri Nov 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-42.git4402c09
+- built docker @projectatomic/docker-1.13.1 commit 4402c09
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit 1c91122
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built docker-init commit 0effd37
+- built libnetwork commit 460ac8f
+
 * Thu Nov 09 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-41.git0861eff
 - Resolves: #1510351 - CVE-2017-14992
 - built docker @projectatomic/docker-1.13.1 commit 0861eff
