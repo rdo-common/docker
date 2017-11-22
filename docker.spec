@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 42.git%{shortcommit_docker}%{?dist}
+Release: 43.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -943,7 +943,8 @@ exit 0
 %{_sysconfdir}/%{repo}
 # d-s-s specific
 %if %{custom_storage}
-%ghost %config(noreplace) %{_sysconfdir}/sysconfig/%{name}-storage-setup
+#ghost+config causes the file to stay after uninstalling the package and we do not want that
+%ghost %{_sysconfdir}/sysconfig/%{name}-storage-setup
 %config(noreplace) %{dss_datadir}/%{name}-storage-setup-atomichost
 %config(noreplace) %{dss_datadir}/%{name}-storage-setup-cloud
 %config(noreplace) %{dss_datadir}/%{name}-storage-setup-server
@@ -1026,6 +1027,9 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Wed Nov 22 2017 Frantisek Kluknavsky <fkluknav@redhat.com> - 2:1.13.1-43.git4402c09
+- make /etc/sysconfig/docker-storage-setup ghost but not config, https://bugzilla.redhat.com/show_bug.cgi?id=1508376
+
 * Fri Nov 17 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-42.git4402c09
 - built docker @projectatomic/docker-1.13.1 commit 4402c09
 - built docker-novolume-plugin commit 385ec70
