@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker 4402c09586c72e0c32b90d72bd24304f609e2b7a
+%global commit_docker 584d391084d425cc99142f11d8fb738f0159ce11
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 43.git%{shortcommit_docker}%{?dist}
+Release: 44.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1027,6 +1027,17 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Thu Nov 23 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-44.git584d391
+- Resolves: #1510351 - CVE-2017-14992
+- built docker @projectatomic/docker-1.13.1 commit 584d391
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit 1c91122
+- built docker-containerd @projectatomic/docker-1.13.1 commit 62a9c60
+- built docker-init commit 0effd37
+- built libnetwork commit 460ac8f
+
 * Wed Nov 22 2017 Frantisek Kluknavsky <fkluknav@redhat.com> - 2:1.13.1-43.git4402c09
 - make /etc/sysconfig/docker-storage-setup ghost but not config, https://bugzilla.redhat.com/show_bug.cgi?id=1508376
 
