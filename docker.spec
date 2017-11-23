@@ -1028,7 +1028,6 @@ exit 0
 
 %changelog
 * Thu Nov 23 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-44.git584d391
-- Resolves: #1510351 - CVE-2017-14992
 - built docker @projectatomic/docker-1.13.1 commit 584d391
 - built docker-novolume-plugin commit 385ec70
 - built rhel-push-plugin commit af9107b
