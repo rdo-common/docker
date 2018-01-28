@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker 584d391084d425cc99142f11d8fb738f0159ce11
+%global commit_docker b186df3d9438f1db11f026c5281722086bfe4a7f
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 44.git%{shortcommit_docker}%{?dist}
+Release: 45.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1027,6 +1027,12 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Sun Jan 28 2018 Dan Walsh <dwalsh@fedoraproject.org> - 2:1.13.1-45.b186df3
+-  Prevent panic when X-Registry-Auth: null
+-  BACKPORT: Do not reuse a http.Request after a failure in callWithRetry
+-  BACKPORT: devicemapper: remove container rootfs mountPath after umount
+-  BACKPORT: devmapper: Log fstype and mount options during mount error
+
 * Thu Nov 23 2017 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-44.git584d391
 - built docker @projectatomic/docker-1.13.1 commit 584d391
 - built docker-novolume-plugin commit 385ec70
