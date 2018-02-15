@@ -39,7 +39,7 @@
 
 # docker
 %global git_docker https://github.com/projectatomic/docker
-%global commit_docker b186df3d9438f1db11f026c5281722086bfe4a7f
+%global commit_docker f43d177f0c4673fc17abfcd3c9c125e44dfe797e
 %global shortcommit_docker %(c=%{commit_docker}; echo ${c:0:7})
 # docker_branch used in %%check
 %global docker_branch docker-1.13.1
@@ -64,12 +64,12 @@
 
 # docker-runc
 %global git_runc https://github.com/projectatomic/runc/
-%global commit_runc 1c91122c1d992cf1dc971ff14f78eddbf6fb06f5
+%global commit_runc edfbe37c9137b3a5c368ca7174a2767d2b2595cb
 %global shortcommit_runc %(c=%{commit_runc}; echo ${c:0:7})
 
 # docker-containerd
 %global git_containerd https://github.com/projectatomic/containerd
-%global commit_containerd 62a9c6081b0ade9da18b31e623253020db4a8295
+%global commit_containerd 375cb680e0e35a066a6fdd576c51175ff8cd8869
 %global shortcommit_containerd %(c=%{commit_containerd}; echo ${c:0:7})
 
 # rhel-push-plugin
@@ -84,7 +84,7 @@
 
 # docker-proxy
 %global git_libnetwork https://github.com/docker/libnetwork
-%global commit_libnetwork 460ac8fa0bcc888f28f6dec93cdd3bf8b58f975a
+%global commit_libnetwork 1ba81943c93f535fe2ac141d981ba476acf847c2
 %global shortcommit_libnetwork %(c=%{commit_libnetwork}; echo ${c:0:7})
 
 # tini
@@ -97,7 +97,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 46.git%{shortcommit_docker}%{?dist}
+Release: 47.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -1027,6 +1027,16 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Thu Feb 15 2018 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-47.gitf43d177
+- built docker @projectatomic/docker-1.13.1 commit f43d177
+- built docker-novolume-plugin commit 385ec70
+- built rhel-push-plugin commit af9107b
+- built docker-lvm-plugin commit 8647404
+- built docker-runc @projectatomic/docker-1.13.1 commit edfbe37
+- built docker-containerd @projectatomic/docker-1.13.1 commit 375cb68
+- built docker-init commit 0effd37
+- built libnetwork commit 1ba8194
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2:1.13.1-46.gitb186df3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
