@@ -2,10 +2,12 @@
 %global with_devel 1
 %global with_debug 1
 %global with_unit_test 1
+%global with_fish_completion 1
 %else
 %global with_devel 0
 %global with_debug 0
 %global with_unit_test 0
+%global with_fish_completion 0
 %endif
 
 # modifying the dockerinit binary breaks the SHA1 sum check by docker
@@ -97,7 +99,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 47.git%{shortcommit_docker}%{?dist}
+Release: 47.1.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -412,6 +414,7 @@ Summary: %{summary} - for running unit tests
 %{summary} - for running unit tests
 %endif
 
+%if 0%{?with_fish_completion}
 %package fish-completion
 Summary: fish completion files for Docker
 Requires: %{repo} = %{epoch}:%{version}-%{release}
@@ -420,6 +423,7 @@ Provides: %{repo}-io-fish-completion = %{epoch}:%{version}-%{release}
 
 %description fish-completion
 This package installs %{summary}.
+%endif
 
 %package logrotate
 Summary: cron job to run logrotate on Docker containers
@@ -692,11 +696,13 @@ install -p -m 644 man/man8/%{repo}*.8 %{buildroot}%{_mandir}/man8
 install -dp %{buildroot}%{_datadir}/bash-completion/completions
 install -p -m 644 contrib/completion/bash/%{repo} %{buildroot}%{_datadir}/bash-completion/completions
 
+%if 0%{?with_fish_completion}
 # install fish completion
 # create, install and own /usr/share/fish/vendor_completions.d until
 # upstream fish provides it
 install -dp %{buildroot}%{_datadir}/fish/vendor_completions.d
 install -p -m 644 contrib/completion/fish/%{repo}.fish %{buildroot}%{_datadir}/fish/vendor_completions.d
+%endif
 
 # install container logrotate cron script
 install -dp %{buildroot}%{_sysconfdir}/cron.daily/
@@ -975,9 +981,11 @@ exit 0
 %{_sharedstatedir}/docker-unit-test/
 %endif
 
+%if 0%{?with_fish_completion}
 %files fish-completion
 %dir %{_datadir}/fish/vendor_completions.d/
 %{_datadir}/fish/vendor_completions.d/%{repo}.fish
+%endif
 
 %files logrotate
 %doc README.%{repo}-logrotate
@@ -1027,6 +1035,9 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
+* Fri Feb 16 2018 Alan Pevec <apevec AT redhat.com> - 2:1.13.1-47.1.gitf43d177
+- disable fish-completion subpackage for RHEL7
+
 * Thu Feb 15 2018 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-47.gitf43d177
 - built docker @projectatomic/docker-1.13.1 commit f43d177
 - built docker-novolume-plugin commit 385ec70
