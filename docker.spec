@@ -99,7 +99,7 @@ Name: %{repo}
 Epoch: 2
 %endif
 Version: 1.13.1
-Release: 47.1.git%{shortcommit_docker}%{?dist}
+Release: 47.2.git%{shortcommit_docker}%{?dist}
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 URL: https://%{provider}.%{provider_tld}/projectatomic/%{repo}
@@ -174,6 +174,8 @@ Requires: python-rhsm-certificates
 
 # Resolves: #1379184 - include epoch
 Requires: %{repo}-common = %{epoch}:%{version}-%{release}
+
+Requires: %{repo}-client = %{epoch}:%{version}-%{release}
 
 Requires(pre): container-selinux >= 2:2.2-2
 
@@ -433,6 +435,14 @@ Provides: %{repo}-io-logrotate = %{epoch}:%{version}-%{release}
 %description logrotate
 This package installs %{summary}. logrotate is assumed to be installed on
 containers for this to work, failures are silently ignored.
+
+%package client
+Summary: Client side files for Docker
+License: ASL 2.0
+Requires: %{repo}-common
+
+%description client
+%{summary}
 
 %package novolume-plugin
 URL: %{git_novolume}
@@ -939,7 +949,6 @@ exit 0
 %{_mandir}/man1/%{name}*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
-%{_bindir}/%{repo}-current
 %{_bindir}/%{repo}d-current
 %{_unitdir}/%{repo}.service
 %{_unitdir}/%{repo}-containerd.service
@@ -991,6 +1000,10 @@ exit 0
 %doc README.%{repo}-logrotate
 %{_sysconfdir}/cron.daily/%{repo}-logrotate
 
+%files client
+%license LICENSE*
+%{_bindir}/%{repo}-current
+
 %files novolume-plugin
 %license LICENSE-novolume-plugin
 %doc README-novolume-plugin.md
@@ -1035,8 +1048,9 @@ exit 0
 %{_unitdir}/%{repo}-lvm-plugin.*
 
 %changelog
-* Fri Feb 16 2018 Alan Pevec <apevec AT redhat.com> - 2:1.13.1-47.1.gitf43d177
+* Tue Feb 21 2018 Alan Pevec <apevec AT redhat.com> - 2:1.13.1-47.2.gitf43d177
 - disable fish-completion subpackage for RHEL7
+- Resolves: #1402677 - create a docker-client subpackage
 
 * Thu Feb 15 2018 Lokesh Mandvekar <lsm5@fedoraproject.org> - 2:1.13.1-47.gitf43d177
 - built docker @projectatomic/docker-1.13.1 commit f43d177
